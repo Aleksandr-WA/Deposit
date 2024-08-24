@@ -23,6 +23,6 @@ class DepositCalculator(APIView):
         future_value = {}
         monthly_rate = rate / 12 / 100
         for month in range(1, periods + 1):
-            key_date = (date + relativedelta(months=month)).strftime('%d-%m-%Y')
+            key_date = (date + relativedelta(months=month)).strftime('%d.%m.%Y')
             future_value[key_date] = (round(amount * (1 + monthly_rate) ** month, 2))
         return future_value
