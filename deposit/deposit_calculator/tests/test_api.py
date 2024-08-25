@@ -3,7 +3,6 @@ import pytest
 from dateutil.relativedelta import relativedelta
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from deposit_calculator.views import DepositCalculator
 
 
@@ -30,7 +29,7 @@ def test_calculate_deposit_success():
 def test_calculate_deposit_invalid_data():
     client = APIClient()
     request_data = {
-        'date': 'invalid-date',
+        'date': '01.08.2023',
         'amount': 'invalid-amount',
         'rate': 'invalid-rate',
         'periods': 'invalid-periods'
