@@ -4,7 +4,11 @@ from django.db import models
 
 class Deposit(models.Model):
     date = models.DateField()
-    periods = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(60)])
-    amount = models.IntegerField(validators=[MinValueValidator(10_000), MaxValueValidator(3_000_000)])
+    periods = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(60)]
+    )
+    amount = models.IntegerField(
+        validators=[MinValueValidator(10_000), MaxValueValidator(3_000_000)]
+    )
     rate = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(8)])
     calculated_value = models.JSONField(null=True, blank=True)

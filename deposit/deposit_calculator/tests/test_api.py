@@ -9,13 +9,8 @@ from deposit_calculator.views import DepositCalculator
 @pytest.mark.django_db
 def test_calculate_deposit_success():
     client = APIClient()
-    request_data = {
-        'date': '30.08.2024',
-        'amount': 10000,
-        'rate': 5,
-        'periods': 12
-    }
-    response = client.post('/api/deposit/calculator/', request_data, format='json')
+    request_data = {"date": "30.08.2024", "amount": 10000, "rate": 5, "periods": 12}
+    response = client.post("/api/deposit/calculator/", request_data, format="json")
     assert response.status_code == status.HTTP_200_OK
     response_data = response.json()
     assert isinstance(response_data, dict)
@@ -29,31 +24,31 @@ def test_calculate_deposit_success():
 def test_calculate_deposit_invalid_data():
     client = APIClient()
     request_data = {
-        'date': '01.08.2023',
-        'amount': 'invalid-amount',
-        'rate': 'invalid-rate',
-        'periods': 'invalid-periods'
+        "date": "01.08.2023",
+        "amount": "invalid-amount",
+        "rate": "invalid-rate",
+        "periods": "invalid-periods",
     }
-    response = client.post('/api/deposit/calculator/', request_data, format='json')
+    response = client.post("/api/deposit/calculator/", request_data, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'date' in response.json()
-    assert 'amount' in response.json()
-    assert 'rate' in response.json()
-    assert 'periods' in response.json()
+    assert "date" in response.json()
+    assert "amount" in response.json()
+    assert "rate" in response.json()
+    assert "periods" in response.json()
 
 
 @pytest.mark.django_db
 def test_calculate_deposit_missing_field():
     client = APIClient()
     request_data = {
-        'date': '2024-08-01',
-        'amount': 1000,
-        'rate': 5
+        "date": "2024-08-01",
+        "amount": 1000,
+        "rate": 5,
         # Периоды отсутствуют
     }
-    response = client.post('/api/deposit/calculator/', request_data, format='json')
+    response = client.post("/api/deposit/calculator/", request_data, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'periods' in response.json()
+    assert "periods" in response.json()
 
 
 def test_calculate_deposit():
@@ -62,7 +57,9 @@ def test_calculate_deposit():
     rate = 5.0
     periods = 6
     expected_value = {
-        (date + relativedelta(months=i)).strftime('%d.%m.%Y'): round(amount * (1 + rate / 12 / 100) ** i, 2)
+        (date + relativedelta(months=i)).strftime("%d.%m.%Y"): round(
+            amount * (1 + rate / 12 / 100) ** i, 2
+        )
         for i in range(1, periods + 1)
     }
     calculated_value = DepositCalculator.calculate_deposit(date, amount, rate, periods)
