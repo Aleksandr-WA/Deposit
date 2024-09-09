@@ -14,7 +14,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 
 # Устанавливаем зависимости проекта с помощью Poetry
-RUN poetry install --no-dev
+RUN poetry install --no-root --only main
 
 # Копируем оставшиеся файлы проекта
 COPY . /app/
