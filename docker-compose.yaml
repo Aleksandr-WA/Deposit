@@ -23,8 +23,6 @@ services:
               poetry run python deposit/manage.py migrate &&
               poetry run python deposit/manage.py runserver 0.0.0.0:8000
             "
-    volumes:
-      - .:/app
     depends_on:
       - db
     ports:
