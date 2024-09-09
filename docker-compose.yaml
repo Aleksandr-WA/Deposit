@@ -20,7 +20,7 @@ services:
     container_name: django_web
     command: >
       sh -c "
-              ./wait-for-it.sh db -- poetry run python deposit/manage.py migrate &&
+              poetry run python deposit/manage.py migrate &&
               poetry run python deposit/manage.py runserver 0.0.0.0:8000
             "
     volumes:
