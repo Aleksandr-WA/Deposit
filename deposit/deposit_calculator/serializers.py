@@ -10,20 +10,16 @@ class DateFormatField(serializers.Field):
         return ""
 
     def to_internal_value(self, data):
-        if data:
-            try:
-                dt = datetime.strptime(data, "%d.%m.%Y")
-                if dt > datetime.today():
-                    return dt
-                else:
-                    raise serializers.ValidationError(
-                        "Дата не может быть ранее текущей даты"
-                    )
-            except ValueError:
-                raise serializers.ValidationError(
-                    "Дата должна быть в формате dd.mm.yyyy"
-                )
-        return None
+        date_now = datetime.today().date()
+
+        try:
+            dt = datetime.strptime(data, "%d.%m.%Y").date()
+        except ValueError:
+            raise serializers.ValidationError("Дата должна быть в формате dd.mm.yyyy")
+
+        if dt >= date_now:
+            return dt
+        raise serializers.ValidationError("Дата не может быть ранее текущей даты")
 
 
 class DepositSerializer(serializers.ModelSerializer):
