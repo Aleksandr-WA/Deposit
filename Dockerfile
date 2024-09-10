@@ -8,13 +8,15 @@ RUN pip install poetry
 WORKDIR /app
 
 # Копируем файлы проекта
-COPY pyproject.toml poetry.lock /app/
+COPY pyproject.toml poetry.lock ./
 
 # Устанавливаем зависимости проекта с помощью Poetry
 RUN poetry install --no-root --only main
 
 # Копируем оставшиеся файлы проекта
-COPY . /app/
+COPY . .
 
 # Установите переменную окружения
 ENV PYTHONUNBUFFERED=1
+
+WORKDIR deposit
