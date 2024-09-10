@@ -31,4 +31,4 @@ class DepositSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Deposit
-        fields = "__all__"
+        exclude = ("created_at", "updated_at")

@@ -12,4 +12,5 @@ class Deposit(models.Model):
     )
     rate = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(8)])
     calculated_value = models.JSONField(null=True, blank=True)
-    created_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
